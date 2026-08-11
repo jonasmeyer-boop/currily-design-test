@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Entwurf G — Weiß × Liquid Glass × Scroll-Film</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FFFFFF; --ink:#081B4A; --grey:#5A6478;
+    --aqua:#8CECF2; --purple:#7047EA; --money:#12805C;
+    --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px;
+    --space-5:20px; --space-6:24px; --space-8:32px; --space-10:40px; --space-12:48px;
+    --radius-lg:16px; --radius-xl:20px; --radius-2xl:24px; --radius-full:9999px;
+    --ease-spring:cubic-bezier(.175,.885,.32,1.275);
+    --ease-default:cubic-bezier(.25,.1,.25,1);
+    --dur-instant:100ms; --dur-fast:200ms;
+    --line:rgba(8,27,74,.08);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Outfit',system-ui,-apple-system,'Segoe UI',sans-serif;
+    background:var(--bg); color:var(--ink);
+    font-size:17px; line-height:1.47;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none}
+  :focus-visible{outline:2px solid var(--purple);outline-offset:3px;border-radius:6px}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 var(--space-6)}
+
+  .aurora{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  .aurora i{position:absolute;border-radius:50%;filter:blur(100px)}
+  .aurora i:nth-child(1){width:600px;height:600px;left:62%;top:-18%;background:radial-gradient(circle,rgba(140,236,242,.35),transparent 70%);animation:drift1 28s var(--ease-default) infinite alternate}
+  .aurora i:nth-child(2){width:480px;height:480px;left:-14%;top:30%;background:radial-gradient(circle,rgba(112,71,234,.14),transparent 70%);animation:drift2 34s var(--ease-default) infinite alternate}
+  @keyframes drift1{from{transform:translate3d(0,0,0)}to{transform:translate3d(-60px,50px,0)}}
+  @keyframes drift2{from{transform:translate3d(0,0,0)}to{transform:translate3d(70px,-40px,0)}}
+  main{position:relative;z-index:1}
+
+  nav{position:sticky;top:var(--space-4);z-index:100;margin:0 auto;max-width:1092px;padding:0 var(--space-6)}
+  .nav-inner{
+    height:60px;display:flex;align-items:center;justify-content:space-between;
+    padding:0 var(--space-3) 0 var(--space-6);
+    background:rgba(255,255,255,.55);
+    backdrop-filter:blur(40px) saturate(200%);
+    -webkit-backdrop-filter:blur(40px) saturate(200%);
+    border:0.5px solid rgba(8,27,74,.10);
+    border-radius:var(--radius-full);
+    box-shadow:0 12px 32px rgba(8,27,74,.10);
+  }
+  .logo{font-weight:800;font-size:21px;letter-spacing:-.02em}
+  .logo span{color:var(--purple)}
+  .nav-links{display:flex;gap:var(--space-8);font-size:15px;color:var(--grey)}
+  .nav-links a{transition:color var(--dur-fast) var(--ease-default)}
+  .nav-links a:hover{color:var(--ink)}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);
+    white-space:nowrap;font-weight:600;border-radius:var(--radius-full);cursor:pointer;
+    transition:transform var(--dur-instant) var(--ease-spring),filter var(--dur-fast) var(--ease-default),box-shadow var(--dur-fast) var(--ease-default)}
+  .btn:hover{filter:brightness(1.05);box-shadow:0 8px 24px rgba(112,71,234,.24)}
+  .btn:active{transform:scale(.97);filter:brightness(.95);box-shadow:0 2px 8px rgba(8,27,74,.15)}
+  .btn-primary{background:var(--purple);color:#fff;padding:14px 28px;box-shadow:0 6px 18px rgba(112,71,234,.28)}
+  .btn-small{padding:10px 22px;font-size:15px}
+  .btn-glass{color:var(--ink);padding:14px 26px;
+    background:rgba(255,255,255,.45);
+    backdrop-filter:blur(12px) saturate(150%);
+    -webkit-backdrop-filter:blur(12px) saturate(150%);
+    border:0.5px solid rgba(8,27,74,.12)}
+
+  .hero{padding:88px 0 72px}
+  .hero .wrap{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-12);align-items:center}
+  h1{font-size:clamp(38px,4.6vw,60px);line-height:1.02;letter-spacing:-.035em;font-weight:800}
+  h1 em{font-style:italic;color:var(--purple);line-height:1.1;display:inline-block;padding-bottom:5px}
+  .sub{margin:var(--space-6) 0 var(--space-8);font-size:18px;color:var(--grey);max-width:44ch}
+  .cta-row{display:flex;gap:var(--space-4);flex-wrap:wrap}
+
+  .panel{
+    background:rgba(255,255,255,.40);
+    backdrop-filter:blur(20px) saturate(180%);
+    -webkit-backdrop-filter:blur(20px) saturate(180%);
+    border:0.5px solid rgba(8,27,74,.10);
+    border-radius:var(--radius-2xl);
+    padding:var(--space-2);
+    box-shadow:0 24px 70px rgba(8,27,74,.14);
+    display:flex;flex-direction:column;gap:var(--space-2);
+  }
+  .pane{background:rgba(255,255,255,.72);border-radius:var(--radius-lg);padding:var(--space-6);border:0.5px solid rgba(8,27,74,.05)}
+  .pane h3{font-size:14px;font-weight:500;color:var(--grey)}
+  .amount{font-size:36px;font-weight:800;letter-spacing:-.02em;margin-top:var(--space-1)}
+  .amount small{font-size:15px;color:var(--grey);font-weight:500}
+  .trend{display:inline-flex;align-items:center;gap:6px;color:var(--money);background:#E7F6EF;font-size:13px;font-weight:700;border-radius:var(--radius-full);padding:4px 12px;margin-top:var(--space-2)}
+  .chart{position:relative;height:120px;margin-top:var(--space-4)}
+  .chart svg{position:absolute;inset:0;width:100%;height:100%}
+  .holding{display:flex;justify-content:space-between;align-items:center;padding:var(--space-3) 0;border-bottom:0.5px solid var(--line);font-size:14px}
+  .holding:last-child{border-bottom:none;padding-bottom:0}
+  .holding b{display:block;font-weight:600}
+  .holding span{color:var(--grey);font-size:13px}
+  .holding .val{font-weight:700;color:var(--money)}
+
+  .stats{border-top:0.5px solid var(--line);border-bottom:0.5px solid var(--line)}
+  .stats .wrap{display:grid;grid-template-columns:repeat(3,1fr)}
+  .stat{padding:var(--space-10) var(--space-6)}
+  .stat + .stat{border-left:0.5px solid var(--line)}
+  .stat b{font-size:34px;font-weight:800;letter-spacing:-.02em;display:block}
+  .stat span{color:var(--grey);font-size:15px}
+
+  /* ===== Scroll-Film (Apple-Technik: gepinnter Abschnitt, Scroll steuert den Film) ===== */
+  .story{position:relative;height:420vh}
+  .story-pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:flex;align-items:center;justify-content:center}
+  .story-head{position:absolute;top:9vh;left:0;right:0;text-align:center;padding:0 var(--space-6)}
+  .story-head h2{font-size:clamp(28px,3.6vw,44px);letter-spacing:-.03em;line-height:1.06;font-weight:800}
+  .story-frame{
+    position:relative;width:min(1000px,88vw);aspect-ratio:16/9;
+    border-radius:var(--radius-2xl);overflow:hidden;
+    box-shadow:0 40px 110px rgba(8,27,74,.28);
+    background:#0A1E52;
+    will-change:transform;
+  }
+  .story-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;will-change:opacity,transform}
+  .story-frame img:first-child{opacity:1}
+  .caption{
+    position:absolute;left:50%;bottom:7vh;transform:translateX(-50%);
+    max-width:min(560px,86vw);text-align:center;
+    background:rgba(255,255,255,.55);
+    backdrop-filter:blur(20px) saturate(180%);
+    -webkit-backdrop-filter:blur(20px) saturate(180%);
+    border:0.5px solid rgba(8,27,74,.10);
+    border-radius:var(--radius-xl);
+    padding:var(--space-4) var(--space-6);
+    box-shadow:0 12px 32px rgba(8,27,74,.12);
+    opacity:0;will-change:opacity,transform;
+  }
+  .caption b{display:block;font-size:18px;font-weight:700;letter-spacing:-.01em}
+  .caption span{font-size:15px;color:var(--grey)}
+  /* Glas-Kacheln, die sich am Ende in der Mitte zusammensetzen */
+  .chip{
+    position:absolute;
+    background:rgba(255,255,255,.6);
+    backdrop-filter:blur(16px) saturate(170%);
+    -webkit-backdrop-filter:blur(16px) saturate(170%);
+    border:0.5px solid rgba(8,27,74,.10);
+    border-radius:var(--radius-lg);
+    padding:var(--space-4) var(--space-5);
+    box-shadow:0 16px 44px rgba(8,27,74,.18);
+    opacity:0;will-change:opacity,transform;
+  }
+  .chip b{display:block;font-size:24px;font-weight:800;letter-spacing:-.02em}
+  .chip span{font-size:13px;color:var(--grey)}
+  .chip-1{top:20%;left:12%}
+  .chip-2{top:26%;right:11%}
+  .chip-3{bottom:22%;left:16%}
+
+  /* ===== Orbit: das Modell fliegt auf dem weißen Seitenhintergrund ===== */
+  .orbit{position:relative;height:520vh}
+  .orbit-pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#fff}
+  .orbit-head{position:absolute;top:8vh;left:0;right:0;text-align:center;padding:0 var(--space-6);z-index:2}
+  .orbit-head h2{font-size:clamp(26px,3.2vw,40px);letter-spacing:-.03em;line-height:1.06;font-weight:800}
+  .orbit-head span{display:inline-flex;align-items:center;gap:8px;margin-top:var(--space-3);color:var(--grey);font-size:14px}
+  #ocv{width:min(1200px,100vw);aspect-ratio:16/9;display:block;
+    -webkit-mask-image:radial-gradient(115% 115% at 50% 50%, #000 62%, transparent 96%);
+    mask-image:radial-gradient(115% 115% at 50% 50%, #000 62%, transparent 96%)}
+  .orbit-loading{position:absolute;color:var(--grey);font-size:14px;letter-spacing:.04em}
+  .plate{
+    position:absolute;max-width:min(400px,80vw);z-index:2;
+    background:rgba(255,255,255,.55);
+    backdrop-filter:blur(20px) saturate(180%);
+    -webkit-backdrop-filter:blur(20px) saturate(180%);
+    border:0.5px solid rgba(8,27,74,.10);
+    border-radius:var(--radius-xl);
+    padding:var(--space-5) var(--space-6);
+    box-shadow:0 16px 44px rgba(8,27,74,.14);
+    opacity:0;will-change:opacity,transform;
+  }
+  .plate b{display:block;font-size:20px;font-weight:800;letter-spacing:-.015em}
+  .plate span{font-size:15px;color:var(--grey)}
+  .plate-1{left:6%;top:24%}
+  .plate-2{right:6%;top:30%}
+  .plate-3{left:8%;bottom:18%}
+  .plate-4{right:8%;bottom:22%}
+
+  .steps{padding:112px 0 104px}
+  .steps h2{font-size:clamp(28px,3.4vw,42px);letter-spacing:-.03em;line-height:1.08;font-weight:800;max-width:22ch}
+  .steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-12);margin-top:var(--space-12)}
+  .step{border-top:2px solid var(--ink);padding-top:var(--space-5)}
+  .step .num{font-size:14px;font-weight:700;color:var(--purple)}
+  .step h4{font-size:21px;margin:var(--space-2) 0;letter-spacing:-.01em;font-weight:700}
+  .step p{color:var(--grey);font-size:15px}
+
+  .closing{padding:0 0 112px}
+  .closing .inner{
+    background:rgba(255,255,255,.45);
+    backdrop-filter:blur(20px) saturate(180%);
+    -webkit-backdrop-filter:blur(20px) saturate(180%);
+    border:0.5px solid rgba(8,27,74,.10);
+    border-radius:var(--radius-2xl);
+    padding:var(--space-12);
+    box-shadow:0 24px 70px rgba(8,27,74,.10);
+    display:flex;align-items:center;justify-content:space-between;gap:var(--space-8);flex-wrap:wrap;
+  }
+  .closing h2{font-size:clamp(26px,3vw,36px);letter-spacing:-.025em;line-height:1.1;font-weight:800;max-width:22ch}
+
+  footer{border-top:0.5px solid var(--line);padding:var(--space-6) 0;color:var(--grey);font-size:14px}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center}
+
+  @media (max-width:920px){
+    .hero .wrap{grid-template-columns:1fr;gap:var(--space-10)}
+    .stats .wrap{grid-template-columns:1fr}
+    .stat + .stat{border-left:none;border-top:0.5px solid var(--line)}
+    .steps-grid{grid-template-columns:1fr;gap:var(--space-8)}
+    .nav-links{display:none}
+    .chip-1{top:14%;left:6%}
+    .chip-2{top:18%;right:5%}
+    .chip-3{bottom:16%;left:8%}
+    .plate-1{left:4%;top:15%}
+    .plate-2{right:4%;top:21%}
+    .plate-3{left:4%;bottom:13%}
+    .plate-4{right:4%;bottom:17%}
+  }
+  /* Handy: Hochformat-Bühne für Film und Orbit, Knöpfe in voller Breite */
+  @media (max-width:700px){
+    .hero{padding:84px 0 48px}
+    .sub{font-size:16px}
+    .cta-row{display:grid;grid-template-columns:1fr;gap:var(--space-3)}
+    .cta-row .btn{width:100%}
+    .stat{padding:var(--space-6)}
+    .stat b{font-size:28px}
+    .story-frame{width:92vw;aspect-ratio:3/4}
+    .story-head{top:6svh}
+    .story-head h2{font-size:24px}
+    .caption{bottom:4svh;padding:var(--space-3) var(--space-4)}
+    .caption b{font-size:16px}
+    .caption span{font-size:13px}
+    .chip{padding:var(--space-3) var(--space-4)}
+    .chip b{font-size:19px}
+    #ocv{width:100vw;aspect-ratio:3/4}
+    .orbit-head{top:5svh}
+    .orbit-head h2{font-size:23px}
+    .plate{max-width:74vw;padding:var(--space-3) var(--space-4)}
+    .plate b{font-size:16px}
+    .plate span{font-size:13px}
+    .plate-1{left:4%;top:17%}
+    .plate-2{right:4%;top:auto;bottom:26%}
+    .plate-3{left:4%;bottom:12%}
+    .plate-4{right:4%;bottom:5%}
+    .steps{padding:72px 0}
+    .closing{padding:0 0 72px}
+    .closing .inner{padding:var(--space-8);justify-content:center;text-align:center}
+    .closing .btn{width:100%}
+    footer .wrap{flex-direction:column;gap:var(--space-2);text-align:center}
+  }
+  /* Reduzierte Bewegung: Film wird zur ruhigen Bildfolge */
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{transition:none!important;animation:none!important}
+    html{scroll-behavior:auto}
+    .story{height:auto}
+    .story-pin{position:static;height:auto;flex-direction:column;gap:var(--space-6);padding:var(--space-12) 0}
+    .story-head{position:static;margin-bottom:var(--space-6)}
+    .story-frame{position:static;aspect-ratio:auto}
+    .story-frame img{position:static;opacity:1;height:auto}
+    .caption,.chip{position:static;opacity:1;transform:none;margin:var(--space-3) auto}
+    .orbit{height:auto}
+    .orbit-pin{position:static;height:auto;flex-direction:column;gap:var(--space-6);padding:var(--space-12) var(--space-6)}
+    .orbit-head{position:static}
+    .plate{position:static;opacity:1;transform:none;margin:var(--space-3) auto}
+  }
+</style>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"><i></i><i></i></div>
+<main>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="#">currily<span>.</span></a>
+    <div class="nav-links">
+      <a href="#film">Projekte</a>
+      <a href="#schritte">So funktioniert's</a>
+      <a href="#">Über uns</a>
+    </div>
+    <a class="btn btn-primary btn-small" href="#">Jetzt investieren</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <h1>Immobilien, die dir <em>jeden Monat</em> zahlen.</h1>
+      <p class="sub">Investiere ab 100&nbsp;€ in professionelle Immobilienprojekte und baue dir Schritt für Schritt wiederkehrendes Einkommen auf.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#">Jetzt investieren</a>
+        <a class="btn btn-glass" href="#film">So funktioniert's</a>
+      </div>
+    </div>
+    <div class="panel" role="img" aria-label="Vorschau des Anleger-Dashboards mit monatlichen Einnahmen und Beteiligungen">
+      <div class="pane">
+        <h3>Dein wiederkehrendes Einkommen</h3>
+        <div class="amount">1.240&nbsp;€ <small>/ Monat</small></div>
+        <span class="trend">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M3 17 9 11l4 4 8-8"/><path d="M14 7h7v7"/></svg>
+          +8,2 % zum Vorjahr
+        </span>
+        <div class="chart" aria-hidden="true">
+          <svg viewBox="0 0 500 120" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="fill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#7047EA" stop-opacity=".22"/>
+                <stop offset="1" stop-color="#7047EA" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path d="M0,100 C36,97 57,86 86,83 C125,79 143,88 179,80 C218,72 236,58 271,55 C311,52 329,64 364,51 C400,39 429,29 461,23 L500,18 L500,120 L0,120 Z" fill="url(#fill)"/>
+            <path d="M0,100 C36,97 57,86 86,83 C125,79 143,88 179,80 C218,72 236,58 271,55 C311,52 329,64 364,51 C400,39 429,29 461,23 L500,18" fill="none" stroke="#7047EA" stroke-width="2.5"/>
+          </svg>
+        </div>
+      </div>
+      <div class="pane">
+        <div class="holding">
+          <div><b>Quartier Hamburg-Ottensen</b><span>Mieteinnahmen</span></div>
+          <div class="val">+518&nbsp;€</div>
+        </div>
+        <div class="holding">
+          <div><b>Stadthaus Leipzig-Plagwitz</b><span>Mieteinnahmen</span></div>
+          <div class="val">+412&nbsp;€</div>
+        </div>
+        <div class="holding">
+          <div><b>Projekt München-Sendling</b><span>Verkaufserlös, anteilig</span></div>
+          <div class="val">+310&nbsp;€</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="stats">
+  <div class="wrap">
+    <div class="stat"><b>12,4&nbsp;%</b><span>durchschnittliche Rendite p.&nbsp;a.</span></div>
+    <div class="stat"><b>2.300+</b><span>Anlegerinnen und Anleger</span></div>
+    <div class="stat"><b>48</b><span>finanzierte Immobilienprojekte</span></div>
+  </div>
+</section>
+
+<!-- Scroll-Film: dein Scrollen steuert Kamera und Blenden -->
+<section class="story" id="film" aria-label="So arbeitet dein Geld: vom Gebäude über die Sanierung bis zur Stadt">
+  <div class="story-pin">
+    <div class="story-head"><h2 id="story-title">So arbeitet dein Geld.</h2></div>
+    <div class="story-frame" id="frame">
+      <img src="bilder/projekt-fassade.jpg" alt="Modernes Wohngebäude am Abend" id="img1">
+      <img src="bilder/projekt-interior.jpg" alt="Saniertes Altbau-Apartment mit Fischgrätparkett" id="img2">
+      <img src="bilder/projekt-stadt.jpg" alt="Hamburger Hafenstadt bei Nacht aus der Luft" id="img3">
+    </div>
+    <div class="caption" id="cap1"><b>Wir kaufen.</b><span>Geprüfte Objekte in Lagen, die ihren Wert halten.</span></div>
+    <div class="caption" id="cap2"><b>Wir sanieren und vermieten.</b><span>Aus Substanz wird Wohnraum — und Miete, jeden Monat.</span></div>
+    <div class="caption" id="cap3"><b>Du verdienst mit.</b><span>Ab 100 €, an echten Häusern in echten Städten.</span></div>
+    <div class="chip chip-1" id="chip1"><b>11,8&nbsp;%</b><span>Rendite p.&nbsp;a.</span></div>
+    <div class="chip chip-2" id="chip2"><b>+518&nbsp;€</b><span>Miete im Juli</span></div>
+    <div class="chip chip-3" id="chip3"><b>ab 100&nbsp;€</b><span>Beteiligung</span></div>
+  </div>
+</section>
+
+<section class="steps" id="schritte">
+  <div class="wrap">
+    <h2>Vom ersten Euro zum monatlichen Einkommen — in drei Schritten.</h2>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="num">01</div>
+        <h4>Projekt auswählen</h4>
+        <p>Geprüfte Immobilienprojekte mit allen Kennzahlen offen auf dem Tisch: Lage, Rendite, Laufzeit, Risiken.</p>
+      </div>
+      <div class="step">
+        <div class="num">02</div>
+        <h4>Ab 100&nbsp;€ investieren</h4>
+        <p>Du entscheidest den Betrag. Kein Mindestvermögen, keine versteckten Gebühren, jederzeit volle Übersicht.</p>
+      </div>
+      <div class="step">
+        <div class="num">03</div>
+        <h4>Monatlich verdienen</h4>
+        <p>Mieteinnahmen und Verkaufserlöse fließen automatisch zurück — und lassen sich direkt reinvestieren.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Orbit: dunkler Showmoment — dein Scrollen dreht das Gebäude -->
+<section class="orbit" id="orbit" aria-label="360-Grad-Ansicht des Gebäudemodells, gesteuert durch Scrollen">
+  <div class="orbit-pin">
+    <div class="orbit-head">
+      <h2>Schau dir dein Investment von allen Seiten an.</h2>
+      <span aria-hidden="true">Scrollen zum Drehen
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 4v14m0 0 6-6m-6 6-6-6"/></svg>
+      </span>
+    </div>
+    <span class="orbit-loading" id="orbit-loading">Modell wird geladen …</span>
+    <canvas id="ocv"></canvas>
+    <div class="plate plate-1" id="op1"><b>Lage, die trägt.</b><span>Gewachsene Viertel, geprüfte Substanz — Wert, der bleibt.</span></div>
+    <div class="plate plate-2" id="op2"><b>Terrassen auf jeder Etage.</b><span>Vom Studio bis zum Penthouse mit Pool — breit vermietet, breit abgesichert.</span></div>
+    <div class="plate plate-3" id="op3"><b>Miete, jeden Monat.</b><span>Einnahmen fließen automatisch an alle Beteiligten — ab dem ersten Tag.</span></div>
+    <div class="plate plate-4" id="op4"><b>Dein Anteil: ab 100&nbsp;€.</b><span>Du steigst ein, wann du willst — und siehst jederzeit alles.</span></div>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="wrap">
+    <div class="inner">
+      <h2>Dein erstes wiederkehrendes Einkommen ist 100&nbsp;€ entfernt.</h2>
+      <a class="btn btn-primary" href="#">Jetzt investieren</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 currily AG</span>
+    <span>Impressum · Datenschutz · Risikohinweise</span>
+  </div>
+</footer>
+
+</main>
+
+<script>
+(function(){
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const story = document.getElementById('film');
+  const frame = document.getElementById('frame');
+  const img1 = document.getElementById('img1'), img2 = document.getElementById('img2'), img3 = document.getElementById('img3');
+  const cap1 = document.getElementById('cap1'), cap2 = document.getElementById('cap2'), cap3 = document.getElementById('cap3');
+  const chips = [document.getElementById('chip1'), document.getElementById('chip2'), document.getElementById('chip3')];
+  const chipFrom = [[-140,-60],[140,-80],[-120,80]]; // Startversatz je Kachel
+
+  const clamp = (v,a,b) => Math.min(b, Math.max(a, v));
+  // Teilfortschritt in [t0,t1] -> 0..1
+  const seg = (p,t0,t1) => clamp((p-t0)/(t1-t0), 0, 1);
+  const easeOut = t => 1-Math.pow(1-t,3);
+
+  function fade(el, o, y){
+    el.style.opacity = o;
+    el.style.transform = 'translateX(-50%) translateY(' + (y||0) + 'px)';
+  }
+
+  function render(){
+    const r = story.getBoundingClientRect();
+    const total = r.height - window.innerHeight;
+    const p = clamp(-r.top / total, 0, 1);
+
+    // Kamera: Rahmen wächst aus 84 % auf 100 % und beruhigt sich
+    const zoom = 0.84 + 0.16 * easeOut(seg(p, 0, .18));
+    frame.style.transform = 'scale(' + zoom + ')';
+
+    // Bild 1 -> 2 (Blende + leichter Ken-Burns-Zoom), Bild 2 -> 3
+    img1.style.opacity = 1 - seg(p, .26, .40);
+    img1.style.transform = 'scale(' + (1 + 0.08 * seg(p, 0, .40)) + ')';
+    img2.style.opacity = seg(p, .26, .40) * (1 - seg(p, .56, .70));
+    img2.style.transform = 'scale(' + (1 + 0.08 * seg(p, .26, .70)) + ')';
+    img3.style.opacity = seg(p, .56, .70);
+    img3.style.transform = 'scale(' + (1 + 0.06 * seg(p, .56, 1)) + ')';
+
+    // Untertitel: nacheinander ein- und ausblenden
+    fade(cap1, seg(p,.06,.12) * (1 - seg(p,.24,.30)), 12*(1-seg(p,.06,.12)));
+    fade(cap2, seg(p,.36,.42) * (1 - seg(p,.54,.60)), 12*(1-seg(p,.36,.42)));
+    fade(cap3, seg(p,.66,.72), 12*(1-seg(p,.66,.72)));
+
+    // Finale: Glas-Kacheln fliegen ein und setzen sich zusammen
+    chips.forEach(function(chip, i){
+      const t = easeOut(seg(p, .74 + i*.05, .86 + i*.05));
+      chip.style.opacity = t;
+      chip.style.transform = 'translate(' + (chipFrom[i][0]*(1-t)) + 'px,' + (chipFrom[i][1]*(1-t)) + 'px) scale(' + (0.9 + 0.1*t) + ')';
+    });
+  }
+
+  let ticking = false;
+  function onScroll(){
+    if (!ticking){
+      ticking = true;
+      requestAnimationFrame(function(){ render(); ticking = false; });
+    }
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+  render();
+})();
+
+/* Orbit: 121 Einzelbilder, Scroll-Position wählt das Bild */
+(function(){
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const FRAME_COUNT = window.ORBIT_FRAME_COUNT || 121;
+  const SRC = i => 'orbit/frame_' + String(i+1).padStart(3,'0') + '.jpg';
+
+  const cv = document.getElementById('ocv');
+  const ctx = cv.getContext('2d');
+  const loading = document.getElementById('orbit-loading');
+  const orbit = document.getElementById('orbit');
+  const plates = ['op1','op2','op3','op4'].map(id => document.getElementById(id));
+  const windows = [[.06,.24],[.30,.48],[.54,.72],[.78,1.01]];
+  const fromX = [-80,80,-80,80];
+
+  const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
+  const seg=(p,a,b)=>clamp((p-a)/(b-a),0,1);
+  const easeOut=t=>1-Math.pow(1-t,3);
+
+  const frames=new Array(FRAME_COUNT); let firstDrawn=false;
+  function load(i){
+    const im=new Image();
+    im.onload=()=>{ if(!firstDrawn){firstDrawn=true; size(); draw(0); loading.style.display='none';} };
+    im.src=(window.ORBIT_FRAMES? window.ORBIT_FRAMES[i] : SRC(i));
+    frames[i]=im;
+  }
+  for(let i=0;i<FRAME_COUNT;i++) load(i);
+
+  function size(){
+    const r=cv.getBoundingClientRect();
+    const dpr=Math.min(window.devicePixelRatio||1,2);
+    cv.width=Math.round(r.width*dpr); cv.height=Math.round(r.height*dpr);
+  }
+  function draw(p){
+    const idx=clamp(Math.round(p*(FRAME_COUNT-1)),0,FRAME_COUNT-1);
+    const im=frames[idx];
+    if(!(im && im.complete && im.naturalWidth)) return;
+    // Bild deckend einpassen und mittig beschneiden (kein Verzerren im Hochformat)
+    const cw=cv.width,ch=cv.height,iw=im.naturalWidth,ih=im.naturalHeight;
+    const s=Math.max(cw/iw,ch/ih), w=iw*s, h=ih*s;
+    ctx.clearRect(0,0,cw,ch);
+    ctx.drawImage(im,(cw-w)/2,(ch-h)/2,w,h);
+  }
+  function render(){
+    const r=orbit.getBoundingClientRect();
+    const total=r.height-window.innerHeight;
+    const p=clamp(-r.top/total,0,1);
+    draw(p);
+    plates.forEach((pl,i)=>{
+      const [a,b]=windows[i];
+      const on=easeOut(seg(p,a,a+.05));
+      const off=1-seg(p,b,b+.04);
+      pl.style.opacity=Math.min(on,off);
+      pl.style.transform='translateX('+(fromX[i]*(1-on))+'px)';
+    });
+  }
+
+  if(reduced){
+    plates.forEach(pl=>{pl.style.opacity=1; pl.style.transform='none';});
+    return;
+  }
+  let ticking=false;
+  function onScroll(){ if(!ticking){ticking=true; requestAnimationFrame(()=>{render(); ticking=false;});} }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',()=>{size(); onScroll();});
+  render();
+})();
+</script>
+</body>
+</html>
