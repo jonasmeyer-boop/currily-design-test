@@ -106,6 +106,39 @@
   .stat b{font-size:34px;font-weight:800;letter-spacing:-.02em;display:block}
   .stat span{color:var(--grey);font-size:15px}
 
+  /* ===== Wachstums-Chart: die Kurve zeichnet sich in drei Etappen ===== */
+  .growth{position:relative;height:380vh}
+  .growth-pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-6)}
+  .growth-head{text-align:center;padding:0 var(--space-6)}
+  .growth-head h2{font-size:clamp(26px,3.4vw,42px);letter-spacing:-.03em;line-height:1.06;font-weight:800}
+  .growth-head p{margin-top:var(--space-2);color:var(--grey);font-size:16px}
+  .growth-stage{position:relative;width:min(1040px,94vw)}
+  .growth-card{
+    background:rgba(255,255,255,.55);
+    backdrop-filter:blur(20px) saturate(180%);
+    -webkit-backdrop-filter:blur(20px) saturate(180%);
+    border:0.5px solid rgba(8,27,74,.10);
+    border-radius:var(--radius-2xl);
+    box-shadow:0 24px 70px rgba(8,27,74,.12);
+    padding:var(--space-6);
+  }
+  .growth-card svg{display:block;width:100%;height:auto}
+  .gchip{
+    position:absolute;transform:translate(-50%,-130%);
+    background:rgba(255,255,255,.72);
+    backdrop-filter:blur(16px) saturate(170%);
+    -webkit-backdrop-filter:blur(16px) saturate(170%);
+    border:0.5px solid rgba(8,27,74,.10);
+    border-radius:var(--radius-lg);
+    padding:var(--space-3) var(--space-4);
+    box-shadow:0 12px 32px rgba(8,27,74,.14);
+    opacity:0;will-change:opacity,transform;
+    max-width:230px;
+  }
+  .gchip b{display:block;font-size:15px;font-weight:800;letter-spacing:-.01em}
+  .gchip span{font-size:13px;color:var(--grey)}
+  .gchip i{font-style:normal;display:inline-block;font-size:11px;font-weight:700;color:var(--purple);letter-spacing:.06em;margin-bottom:2px}
+
   /* ===== Scroll-Film (Apple-Technik: gepinnter Abschnitt, Scroll steuert den Film) ===== */
   .story{position:relative;height:420vh}
   .story-pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:flex;align-items:center;justify-content:center}
@@ -244,6 +277,13 @@
     .plate-2{right:4%;top:auto;bottom:26%}
     .plate-3{left:4%;bottom:12%}
     .plate-4{right:4%;bottom:5%}
+    .growth-head h2{font-size:23px}
+    .growth-head p{font-size:14px}
+    .growth-card{padding:var(--space-4)}
+    .gchip{max-width:170px;padding:var(--space-2) var(--space-3)}
+    .gchip b{font-size:13px}
+    .gchip span{font-size:11px}
+    #gc3{left:74% !important}
     .steps{padding:72px 0}
     .closing{padding:0 0 72px}
     .closing .inner{padding:var(--space-8);justify-content:center;text-align:center}
@@ -337,6 +377,51 @@
     <div class="stat"><b>12,4&nbsp;%</b><span>durchschnittliche Rendite p.&nbsp;a.</span></div>
     <div class="stat"><b>2.300+</b><span>Anlegerinnen und Anleger</span></div>
     <div class="stat"><b>48</b><span>finanzierte Immobilienprojekte</span></div>
+  </div>
+</section>
+
+<!-- Wachstums-Chart: dein Scrollen zeichnet die Einkommenskurve in drei Etappen -->
+<section class="growth" id="wachstum" aria-label="Einkommenskurve in drei Etappen, gezeichnet beim Scrollen">
+  <div class="growth-pin">
+    <div class="growth-head">
+      <h2>So wächst dein wiederkehrendes Einkommen.</h2>
+      <p>Scroll weiter — jede Etappe baut auf der letzten auf.</p>
+    </div>
+    <div class="growth-stage">
+      <div class="growth-card">
+        <svg viewBox="0 0 1000 420" aria-hidden="true">
+          <defs>
+            <linearGradient id="gfill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#7047EA" stop-opacity=".20"/>
+              <stop offset="1" stop-color="#7047EA" stop-opacity="0"/>
+            </linearGradient>
+            <clipPath id="gclip"><rect id="gcliprect" x="0" y="0" width="0" height="420"/></clipPath>
+          </defs>
+          <g stroke="rgba(8,27,74,.07)" stroke-width="1">
+            <line x1="40" y1="380" x2="960" y2="380"/>
+            <line x1="40" y1="272" x2="960" y2="272"/>
+            <line x1="40" y1="164" x2="960" y2="164"/>
+            <line x1="40" y1="56"  x2="960" y2="56"/>
+          </g>
+          <g fill="#5A6478" font-size="13" font-family="inherit">
+            <text x="40" y="400">Jahr 1</text>
+            <text x="480" y="400">Jahr 3</text>
+            <text x="920" y="400">Jahr 5</text>
+          </g>
+          <path id="garea" clip-path="url(#gclip)" fill="url(#gfill)"
+            d="M40,380 C130,374 220,356 306,332 C400,304 480,258 606,222 C700,192 800,140 960,72 L960,380 Z"/>
+          <path id="gline" fill="none" stroke="#7047EA" stroke-width="3.5" stroke-linecap="round"
+            d="M40,380 C130,374 220,356 306,332 C400,304 480,258 606,222 C700,192 800,140 960,72"/>
+          <circle id="gdot" r="7" fill="#7047EA" stroke="#fff" stroke-width="2.5"/>
+          <g id="gm1" opacity="0"><circle cx="306" cy="332" r="5.5" fill="#fff" stroke="#7047EA" stroke-width="3"/></g>
+          <g id="gm2" opacity="0"><circle cx="606" cy="222" r="5.5" fill="#fff" stroke="#7047EA" stroke-width="3"/></g>
+          <g id="gm3" opacity="0"><circle cx="960" cy="72" r="5.5" fill="#fff" stroke="#7047EA" stroke-width="3"/></g>
+        </svg>
+      </div>
+      <div class="gchip" id="gc1" style="left:30.6%;top:79%"><i>ETAPPE 1</i><b>Deine erste Miete.</b><span>Ab dem ersten Projekt: +80&nbsp;€ im Monat, automatisch.</span></div>
+      <div class="gchip" id="gc2" style="left:60.6%;top:52.9%"><i>ETAPPE 2</i><b>Du reinvestierst.</b><span>Einnahmen fließen in neue Projekte — der Zinseszins übernimmt.</span></div>
+      <div class="gchip" id="gc3" style="left:87%;top:17.1%"><i>ETAPPE 3</i><b>1.240&nbsp;€ / Monat.</b><span>Wiederkehrendes Einkommen, das ohne dich weiterarbeitet.</span></div>
+    </div>
   </div>
 </section>
 
@@ -477,6 +562,57 @@
   }
   window.addEventListener('scroll', onScroll, {passive:true});
   window.addEventListener('resize', onScroll);
+  render();
+})();
+
+/* Wachstums-Chart: Scroll zeichnet die Kurve in drei Etappen */
+(function(){
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const sec = document.getElementById('wachstum');
+  const line = document.getElementById('gline');
+  const clip = document.getElementById('gcliprect');
+  const dot = document.getElementById('gdot');
+  const marks = ['gm1','gm2','gm3'].map(id => document.getElementById(id));
+  const chips = ['gc1','gc2','gc3'].map(id => document.getElementById(id));
+  const LEN = line.getTotalLength();
+  // Etappen-Schwellen als Anteil der Linienlänge (Meilenstein-Punkte)
+  const T = [0.29, 0.615, 0.995];
+
+  line.style.strokeDasharray = LEN;
+  const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
+  const seg=(p,a,b)=>clamp((p-a)/(b-a),0,1);
+  const easeOut=t=>1-Math.pow(1-t,3);
+
+  function render(){
+    const r = sec.getBoundingClientRect();
+    const total = r.height - window.innerHeight;
+    const ps = clamp(-r.top/total, 0, 1);
+    const p = seg(ps, .06, .90);           // Zeichenfortschritt
+    line.style.strokeDashoffset = LEN * (1 - p);
+    const pt = line.getPointAtLength(LEN * p);
+    clip.setAttribute('width', pt.x);
+    dot.setAttribute('cx', pt.x); dot.setAttribute('cy', pt.y);
+    marks.forEach((m,i)=>{ m.setAttribute('opacity', p >= T[i]-0.01 ? 1 : 0); });
+    chips.forEach((c,i)=>{
+      const t = easeOut(seg(p, T[i]-0.01, T[i]+0.06));
+      c.style.opacity = t;
+      c.style.transform = 'translate(-50%,' + (-130 + 14*(1-t)) + '%)';
+    });
+  }
+
+  if (reduced){
+    line.style.strokeDashoffset = 0;
+    const pt = line.getPointAtLength(LEN);
+    clip.setAttribute('width', pt.x);
+    dot.setAttribute('cx', pt.x); dot.setAttribute('cy', pt.y);
+    marks.forEach(m=>m.setAttribute('opacity',1));
+    chips.forEach(c=>{c.style.opacity=1; c.style.transform='translate(-50%,-130%)';});
+    return;
+  }
+  let ticking=false;
+  function onScroll(){ if(!ticking){ticking=true; requestAnimationFrame(()=>{render(); ticking=false;});} }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll);
   render();
 })();
 
