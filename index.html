@@ -158,9 +158,8 @@
   .orbit-head{position:absolute;top:8vh;left:0;right:0;text-align:center;padding:0 var(--space-6);z-index:2}
   .orbit-head h2{font-size:clamp(26px,3.2vw,40px);letter-spacing:-.03em;line-height:1.06;font-weight:800}
   .orbit-head span{display:inline-flex;align-items:center;gap:8px;margin-top:var(--space-3);color:var(--grey);font-size:14px}
-  #ocv{width:min(1200px,100vw);aspect-ratio:16/9;display:block;
-    -webkit-mask-image:radial-gradient(115% 115% at 50% 50%, #000 62%, transparent 96%);
-    mask-image:radial-gradient(115% 115% at 50% 50%, #000 62%, transparent 96%)}
+  /* Multiplizieren macht das Weiß des Videos unsichtbar — nur Haus und Schatten bleiben */
+  #ocv{width:min(1200px,100vw);aspect-ratio:16/9;display:block;mix-blend-mode:multiply}
   .orbit-loading{position:absolute;color:var(--grey);font-size:14px;letter-spacing:.04em}
   .plate{
     position:absolute;max-width:min(400px,80vw);z-index:2;
@@ -385,17 +384,17 @@
 <section class="orbit" id="orbit" aria-label="360-Grad-Ansicht des Gebäudemodells, gesteuert durch Scrollen">
   <div class="orbit-pin">
     <div class="orbit-head">
-      <h2>Schau dir dein Investment von allen Seiten an.</h2>
-      <span aria-hidden="true">Scrollen zum Drehen
+      <h2>Schau zu, wie dein Investment entsteht.</h2>
+      <span aria-hidden="true">Scrollen zum Bauen
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 4v14m0 0 6-6m-6 6-6-6"/></svg>
       </span>
     </div>
     <span class="orbit-loading" id="orbit-loading">Modell wird geladen …</span>
     <canvas id="ocv"></canvas>
-    <div class="plate plate-1" id="op1"><b>Lage, die trägt.</b><span>Gewachsene Viertel, geprüfte Substanz — Wert, der bleibt.</span></div>
-    <div class="plate plate-2" id="op2"><b>Terrassen auf jeder Etage.</b><span>Vom Studio bis zum Penthouse mit Pool — breit vermietet, breit abgesichert.</span></div>
-    <div class="plate plate-3" id="op3"><b>Miete, jeden Monat.</b><span>Einnahmen fließen automatisch an alle Beteiligten — ab dem ersten Tag.</span></div>
-    <div class="plate plate-4" id="op4"><b>Dein Anteil: ab 100&nbsp;€.</b><span>Du steigst ein, wann du willst — und siehst jederzeit alles.</span></div>
+    <div class="plate plate-1" id="op1"><b>Etage für Etage: dein Geld baut.</b><span>Viele Beteiligungen ab 100&nbsp;€ finanzieren gemeinsam das Projekt.</span></div>
+    <div class="plate plate-2" id="op2"><b>Geprüfte Substanz.</b><span>Lage, Bauqualität und Kalkulation — alles offen einsehbar.</span></div>
+    <div class="plate plate-3" id="op3"><b>Bezugsfertig.</b><span>Saniert und abgenommen — bereit für die ersten Mieter.</span></div>
+    <div class="plate plate-4" id="op4"><b>Fertig — und vermietet.</b><span>Ab jetzt fließt jeden Monat Miete — auch an dich.</span></div>
   </div>
 </section>
 
